@@ -10,16 +10,17 @@ class Response extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange[100],
       appBar: AppBar(title: Row(
         children: [
           Consumer(builder: (context, watch, child){
             final previousTab = watch(previousNavigationStateProvider).state;
-            return   IconButton(icon: Icon(Icons.arrow_back), onPressed: (){
+            return   IconButton(icon: Icon(Icons.arrow_back, color: Colors.white,), onPressed: (){
               watch(bottomNavigationStateProvider).state = previousTab;
             });
           }),
           SizedBox(width: 10,),
-          Text('Response'),
+          Text('Response', style: TextStyle(color: Colors.white),),
         ],
       ),),
       body: Consumer(builder: (context, watch, child){
@@ -27,20 +28,22 @@ class Response extends StatelessWidget {
 
         return todosAsync.when(
             data: (todos){
-              return ListView.builder(
+              return ListView.separated(
+                separatorBuilder: (context, index){
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: LinearProgressIndicator(),
+                  );
+                },
+
                 itemCount: todos.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index){
                   final todoItem = todos[index];
 
-                return Column(
-                  children: [
-                    ListTile(
-                      leading: Checkbox(value: todoItem.isCompleted, onChanged: null),
-                      title: Text('${todoItem.title}'),
-                    ),
-                    Divider(thickness: 1,)
-                  ],
+                return ListTile(
+                  leading: todoItem.isCompleted ? Icon(Icons.check_circle_outline_outlined, size: 35, color: Colors.green,) : Icon(Icons.cancel_outlined, color: Colors.red, size: 35,),
+                  title: Text('${todoItem.title}', style:  TextStyle(color: Colors.orange, fontWeight: FontWeight.w700),),
                 );
               });
             },

@@ -27,6 +27,7 @@ dependencies:
   hooks_riverpod:
   fluttertoast:
   http:
+  flutter_fadein:
 
 
 
@@ -65,10 +66,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Laila
+      fonts:
+        - asset: assets/fonts/laila.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -23,8 +23,10 @@ class Dictionary extends StatelessWidget {
   Map<String, String> stringBased = Map<String, String>();
   Map<int, String> numberBasedFinal = Map<int, String>();
   Map<String, String> stringBasedFinal = Map<String, String>();
+  var numSorted;
+  var stringSorted;
 
-  stringIntConverter(String numStringKey, String numStringValue) {
+  stringToInt(String numStringKey, String numStringValue) {
     try {
       int value = int.parse(numStringKey);
       numberBased.putIfAbsent(value, () => numStringValue);
@@ -33,81 +35,106 @@ class Dictionary extends StatelessWidget {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  void sortingArray() {
     dictionary.forEach((key, value) {
-      stringIntConverter(key, value);
+      stringToInt(key, value);
       print('$key');
     });
 
-    var numSorted = numberBased.keys.toList()
-      ..sort();
-    var stringSorted = stringBased.keys.toList()
-      ..sort();
+    numSorted = numberBased.keys.toList()..sort();
+    stringSorted = stringBased.keys.toList()..sort();
 
     for (var i in stringSorted) {
       stringBased.forEach((key, value) {
         if (i == key) {
           stringBasedFinal.putIfAbsent(i, () => value);
         }
-      });}
+      });
+    }
 
-      for (var i in numSorted) {
-        numberBased.forEach((key, value) {
-          if (i == key) {
-            numberBasedFinal.putIfAbsent(i, () => value);
-          }
-        });
-      }
-      ;
+    for (var i in numSorted) {
+      numberBased.forEach((key, value) {
+        if (i == key) {
+          numberBasedFinal.putIfAbsent(i, () => value);
+        }
+      });
+    }
+  }
 
-      return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Consumer(builder: (context, watch, child) {
-                final previousTab = watch(previousNavigationStateProvider)
-                    .state;
-                return IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      watch(bottomNavigationStateProvider).state = previousTab;
-                    });
-              }),
-              SizedBox(
-                width: 10,
-              ),
-              Text('Dictionary'),
-            ],
-          ),
+  @override
+  Widget build(BuildContext context) {
+    sortingArray();
+
+    return Scaffold(
+      backgroundColor: Colors.orange[100],
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Consumer(builder: (context, watch, child) {
+              final previousTab = watch(previousNavigationStateProvider).state;
+              return IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    watch(bottomNavigationStateProvider).state = previousTab;
+                  });
+            }),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              'Dictionary',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
         ),
-        body: Center(child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Card(
-            elevation: 5,
-            child: ListView(
-              children: [
+      ),
+      body: Center(
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          elevation: 5,
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Keys',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange),
+                    ),
+                    Text(
+                      'Values',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange),
+                    )
+                  ],
+                ),
+              ),
+              for (var key in numSorted) ...[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Keys', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                      Text('Values', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
+                      Text(
+                        '$key',
+                        style: TextStyle(color: Colors.orange),
+                      ),
+                      Text('${numberBasedFinal[key]}',
+                          style: TextStyle(color: Colors.orange)),
                     ],
                   ),
-                ),
-                for(var key in numSorted) ...[Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('$key'),
-                      Text('${numberBasedFinal[key]}'),
-                    ],
-                  ),
-                )],
-                for(var key in stringSorted) ...[Padding(
+                )
+              ],
+              for (var key in stringSorted) ...[
+                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,12 +143,12 @@ class Dictionary extends StatelessWidget {
                       Text('${stringBasedFinal[key]}'),
                     ],
                   ),
-                )]
-              ],
-            ),
+                )
+              ]
+            ],
           ),
-        )),
-      );
-    }
+        ),
+      )),
+    );
   }
-
+}

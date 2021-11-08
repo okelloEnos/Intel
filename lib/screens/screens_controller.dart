@@ -19,6 +19,8 @@ class ScreenBottomController extends StatelessWidget {
 
       return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.orange[50],
+            type: BottomNavigationBarType.fixed,
           showSelectedLabels: true,
             showUnselectedLabels: true,
             onTap: (int index) {
@@ -28,24 +30,24 @@ class ScreenBottomController extends StatelessWidget {
             },
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.info_outline, color: currentTab == 0 ? Colors.blue : Colors.grey,),
+                  icon: Icon(Icons.drive_file_rename_outline, color: currentTab == 0 ? Colors.orange: Colors.grey,),
                   // ignore: deprecated_member_use
                   title: Text('Info',
-                      style:  TextStyle(color: currentTab == 0 ? Colors.blue : Colors.grey)
+                      style:  TextStyle(color: currentTab == 0 ? Colors.orange : Colors.grey)
                   )),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline_outlined, color: currentTab == 1 ? Colors.blue : Colors.grey),
+                icon: Icon(Icons.person_pin, color: currentTab == 1 ? Colors.orange : Colors.grey),
                 // ignore: deprecated_member_use
-                title: Text('Design', style:  TextStyle(color: currentTab == 1 ? Colors.blue : Colors.grey),),
+                title: Text('Design', style:  TextStyle(color: currentTab == 1 ? Colors.orange : Colors.grey),),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.drive_file_rename_outline, color: currentTab == 2 ? Colors.blue : Colors.grey),
+                icon: Icon(Icons.receipt_long_rounded, color: currentTab == 2 ? Colors.orange : Colors.grey),
                 // ignore: deprecated_member_use
-                title: Text('Response', style: TextStyle(color: currentTab == 2 ? Colors.blue : Colors.grey),),),
+                title: Text('Response', style: TextStyle(color: currentTab == 2 ? Colors.orange : Colors.grey),),),
               BottomNavigationBarItem(
-                icon: Icon(Icons.receipt_long, color: currentTab == 3 ? Colors.blue : Colors.grey),
+                icon: Icon(Icons.menu_book, color: currentTab == 3 ? Colors.orange: Colors.grey),
                 // ignore: deprecated_member_use
-                title: Text('Dictionary', style: TextStyle(color: currentTab == 3 ? Colors.blue : Colors.grey),),)
+                title: Text('Dictionary', style: TextStyle(color: currentTab == 3 ? Colors.orange : Colors.grey),),)
             ]),
         body: Stack(
           children: [screenOptions[currentTab]],
