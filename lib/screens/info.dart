@@ -90,13 +90,20 @@ class Info extends StatelessWidget {
                   return Consumer(builder: (context, watch, child) {
                     return RaisedButton(
                       onPressed: () async {
-                        watch(userProvider).saveUser(
-                            name: nameController.text,
-                            mail: mailController.text,
-                            phone: phoneController.text);
-                        watch(bottomNavigationStateProvider).state = 1;
-                        Fluttertoast.showToast(
-                            msg: 'User Information Successfully Submitted ...');
+                        if(mailController.text.isEmpty || phoneController.text.isEmpty || nameController.text.isEmpty){
+                          SnackBar snackBar = SnackBar(content: Text('Please Fill All Fields Are Required.',));
+                            Scaffold.of(context).showSnackBar(snackBar);
+                          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                        else {
+                          watch(userProvider).saveUser(
+                              name: nameController.text,
+                              mail: mailController.text,
+                              phone: phoneController.text);
+                          watch(bottomNavigationStateProvider).state = 1;
+                          Fluttertoast.showToast(
+                              msg: 'User Information Successfully Submitted ...');
+                        }
                       },
                       color: Colors.orange,
                       child: Text(

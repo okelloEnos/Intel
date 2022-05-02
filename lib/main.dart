@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intel_test/screens/screens_controller.dart';
+import 'package:intel_test/screens/splash_screen.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ScreenBottomController(),
+      home: SplashScreen(),
     );
   }
 }
